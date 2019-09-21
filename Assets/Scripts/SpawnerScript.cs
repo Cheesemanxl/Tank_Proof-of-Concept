@@ -16,10 +16,15 @@ public class SpawnerScript : MonoBehaviour
     private float newx;
     private float newy;
 
+    void Start()
+    {
+        SpawnTarget();
+    }
+
     void Update()
     {
         //count is less than 288
-        if (count < 288)
+        if (count < 576)
         {
             //add 1 to count
             count++;

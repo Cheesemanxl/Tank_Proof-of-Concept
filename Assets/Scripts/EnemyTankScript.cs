@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TankScript : MonoBehaviour
+public class EnemyTankScript : MonoBehaviour
 {
     private float speed = 1.0f;
     private Vector3 pos;
-    public APScript APScript;
+    public EnemyAPScript APScript;
+    private int count = 0;
 
     private bool lookUp = true;
     private bool lookDown = false;
@@ -21,23 +22,30 @@ public class TankScript : MonoBehaviour
 
     void Update()
     {
-        if (APScript.alive)
+        if (count > 288)
+        {
+            count++;
+        }
+        else
         {
             //Recieve player input and choose direction
             DecideDirection();
 
             //Move Player Towards Decided Direction
             transform.position = Vector3.MoveTowards(transform.position, pos, Time.deltaTime * speed);
+            count = 0;
         }
     }
 
     void DecideDirection()
     {
+        int choice = Random.Range(0, 3);
+
         //If the character has not yet moved
-        if (transform.position == pos)
+        if (APScript.ap > 0)
         {
             //If the player inputs W
-            if (Input.GetKeyDown(KeyCode.W))
+            if (choice == 0)
             {
                 //if not looking Up
                 if (lookUp == false)
@@ -56,8 +64,10 @@ public class TankScript : MonoBehaviour
                 else
                 {
                     //If the player has enough AP
-                    if (APScript.canAction) {
-                        if (transform.position.y < 4) {
+                    if (APScript.canAction)
+                    {
+                        if (transform.position.y < 4)
+                        {
                             //Move Up
                             pos += Vector3.up;
                             //Reduce AP by 1
@@ -67,7 +77,7 @@ public class TankScript : MonoBehaviour
                 }
             }
             //If the player inputs A
-            else if (Input.GetKeyDown(KeyCode.A))
+            else if (choice == 1)
             {
                 //if not looking left
                 if (lookLeft == false)
@@ -99,7 +109,7 @@ public class TankScript : MonoBehaviour
                 }
             }
             //If the player inputs S
-            else if (Input.GetKeyDown(KeyCode.S))
+            else if (choice == 2)
             {
                 //if not looking down
                 if (lookDown == false)
@@ -131,7 +141,7 @@ public class TankScript : MonoBehaviour
                 }
             }
             //If the player inputs D
-            else if (Input.GetKeyDown(KeyCode.D))
+            else if (choice == 3)
             {
                 //if not looking right
                 if (lookRight == false)
@@ -163,11 +173,5 @@ public class TankScript : MonoBehaviour
                 }
             }
         }
-    }
-
-    public void Death()
-    {
-        APScript.alive = false;
-        APScript.ap = 0;
     }
 }

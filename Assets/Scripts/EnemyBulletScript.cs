@@ -2,22 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletScript : MonoBehaviour
+public class EnemyBulletScript : MonoBehaviour
 {
     public Rigidbody2D body;
     private int count = 0;
-    public APScript APScript;
 
     void Start()
     {
         //add velocity to the bullet at creation 
-        body.velocity = transform.up * 5;
-        APScript = GameObject.FindGameObjectWithTag("APHandler").GetComponent<APScript>();
+        body.velocity = transform.up * 2.5f;
     }
 
     void Update()
     {
-        if(count < 500)
+        if (count < 500)
         {
             count++;
         }
@@ -29,12 +27,11 @@ public class BulletScript : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        TargetScript target = col.GetComponent<TargetScript>();
+        TankScript target = col.GetComponent<TankScript>();
 
         if (target != null)
         {
             target.Death();
-            APScript.UpScore();
         }
     }
 

@@ -18,19 +18,22 @@ public class TurretScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Aims turret based on User Input
-        RotateTurret();
-
-        //If the player inputs Spacebar
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (APScript.alive)
         {
-            //If the player has enough AP
-            if (APScript.canAction)
+            //Aims turret based on User Input
+            RotateTurret();
+
+            //If the player inputs Spacebar
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                //Fire Bullet
-                Fire();
-                //Reduce AP by 1
-                APScript.ap--;
+                //If the player has enough AP
+                if (APScript.canAction)
+                {
+                    //Fire Bullet
+                    Fire();
+                    //Reduce AP by 1
+                    APScript.ap--;
+                }
             }
         }
     }
